@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
@@ -20,17 +20,19 @@ function App() {
       axios
         .get(url)
         .then((response) => {
-          setData(response.data);
+          setData(response.data); // 更新 setData 資料內容狀態 (api 回應成功的話)
           console.log(response.data);
           console.log(response.data.name);
         })
         .catch((e) => {
           // setData(e);
+          // 如果 API 回應失敗，跑到 catch 的話，是不會 setData 的，所以 data 的資料並沒有更新
           console.log("ERROR", e);
           console.log(e.data);
           console.log(e.name);
         });
 
+      // 清空輸入框欄位的值
       setLocation("");
     }
   };
@@ -40,9 +42,9 @@ function App() {
       <div className="search">
         <input
           value={location}
-          onChange={(event) => setLocation(event.target.value)}
+          onChange={(event) => setLocation(event.target.value)} // onChange 事件，執行 setLocation() 函式，改變狀態
           placeholder="Enter Location"
-          onKeyDown={searchLocation}
+          onKeyDown={searchLocation} // 鍵盤 keydonw 事件，執行 searchLocation() 函式
           type="text"
         />
       </div>
